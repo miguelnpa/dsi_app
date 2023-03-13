@@ -101,30 +101,12 @@ class RandomWordsState extends State<RandomWords> {
         pair.asPascalCase,
         style: _biggerFont,
       ),
-      trailing: Icon(
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {
-        setState(
-          () {
-            if (alreadySaved) {
-              _saved.remove(pair);
-            } else {
-              _saved.add(pair);
-            }
-          },
-        );
-      },
-    );
-  }
-
-  Widget _buildCard(WordPair pair) {
-    final bool alreadySaved = _saved.contains(pair);
-
-    return Card(
-      child: InkWell(
-        onTap: () {
+      trailing: IconButton(
+        icon: Icon(
+          alreadySaved ? Icons.favorite : Icons.favorite_border,
+          color: alreadySaved ? Colors.red : null,
+        ),
+        onPressed: () {
           setState(
             () {
               if (alreadySaved) {
@@ -135,12 +117,40 @@ class RandomWordsState extends State<RandomWords> {
             },
           );
         },
-        child: SizedBox(
-          child: Center(
-            child: Text(
-              pair.asPascalCase,
-              style: _biggerFont,
-            ),
+      ),
+    );
+  }
+
+  Widget _buildCard(WordPair pair) {
+    final bool alreadySaved = _saved.contains(pair);
+
+    return Card(
+      child: SizedBox(
+        child: Center(
+          child: Row(
+            children: [
+              Text(
+                pair.asPascalCase,
+                style: _biggerFont,
+              ),
+              IconButton(
+                icon: Icon(
+                  alreadySaved ? Icons.favorite : Icons.favorite_border,
+                  color: alreadySaved ? Colors.red : null,
+                ),
+                onPressed: () {
+                  setState(
+                    () {
+                      if (alreadySaved) {
+                        _saved.remove(pair);
+                      } else {
+                        _saved.add(pair);
+                      }
+                    },
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),
